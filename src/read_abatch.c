@@ -1721,6 +1721,15 @@ static int read_gzcel_file_stddev(const char *filename, double *intensity, size_
       break;
     }
 
+    if (cur_x < 0 || cur_x >= chip_dim_rows){    
+      error("It appears that the file %s is corrupted.",filename);
+      return 1;
+    }
+    if (cur_y < 0 || cur_y >= chip_dim_rows){
+      error("It appears that the file %s is corrupted.",filename);
+      return 1;
+    }
+
     cur_stddev = atof(current_token);
     
     cur_index = cur_x + chip_dim_rows*(cur_y);
@@ -1830,6 +1839,16 @@ static int read_gzcel_file_npixels(const char *filename, double *intensity, size
       Rprintf("Warning: found an incomplete line where not expected in %s.\nThe CEL file may be truncated. \nSucessfully read to cel intensity %d of %d expected\n", filename, i-1, rows);
       break;
     }
+
+    if (cur_x < 0 || cur_x >= chip_dim_rows){    
+      error("It appears that the file %s is corrupted.",filename);
+      return 1;
+    }
+    if (cur_y < 0 || cur_y >= chip_dim_rows){
+      error("It appears that the file %s is corrupted.",filename);
+      return 1;
+    }
+
     cur_npixels = atoi(current_token);
 
     cur_index = cur_x + chip_dim_rows*(cur_y);
